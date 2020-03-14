@@ -193,7 +193,7 @@ namespace HeadingGenerator.Generator {
             List<StringBuilder> lines = new List<StringBuilder>(1);
 
             //If the text is less then the maximum length, it doesn't need to be split
-            if (text.Length < maximumLength) lines.Add(new StringBuilder(text));
+            if (text.Length <= maximumLength) lines.Add(new StringBuilder(text));
 
             //Otherwise, the line needs to be subdivided to meet the length requirement
             else {
@@ -239,7 +239,10 @@ namespace HeadingGenerator.Generator {
                 int needed = maximumLength - lines[i].Length + (horizontalBufferSize * 2);
 
                 //If there is no needed buffer, don't bother
-                if (needed == 0) continue;
+                if (needed == 0) {
+                    formatted[i] = lines[i].ToString();
+                    continue;
+                }
 
                 //Get half of the amount that is needed to buffer out the first part of this 
                 int half = needed / 2;
